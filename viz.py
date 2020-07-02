@@ -1,7 +1,20 @@
+'''
+CUB-200-2011 part location visualizer
+
+plot one image:             viz.py --img_path /home/dahyun/dataset/CUB_200_2011/images/012.Yellow_headed_Blackbird/Yellow_Headed_Blackbird_0059_8079.jpg
+plot all image {randomly/in order}:    viz.py --plot_order {randomly, in_order}
+'''
+
+
 import os
 import argparse
 from PIL import Image
+import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib import colors as mcolors
+
+plt.rcParams["figure.figsize"] = (14, 14)
+plt.rcParams["font.size"] = 16
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--img_path", default=None, help="image path to visualize", type=str)
@@ -44,24 +57,41 @@ def img_path_abs(rel_path):
 def plot_one(img_path):
     id = id2path[img_path]
     part_locs = id2part[id]
+    print(id)
+    print(img_path)
     print(part_locs)
+    print('---------------------------------------------------------------------------------------\n')
     abs_path = img_path_abs(img_path)
     p = Image.open(abs_path)
 
+    plt.title(img_path.split(os.path.sep)[-1])
     plt.imshow(p)
+    colors_dict = ['b', 'g', 'r', 'c', 'm',
+                   'y', 'w', 'tab:orange', 'tab:purple', 'tab:brown',
+                   'tab:pink', 'tab:gray', 'lime', 'aqua', 'fuchsia']
     for i, (x, y, visible) in enumerate(part_locs):
         if visible:
             label = '{} (o)'.format(part_label_dict[i])
-            plt.scatter(x, y, marker='+', label=label)
+            plt.scatter(x, y, marker='o', label=label, s=200, edgecolors='black', c=colors_dict[i])
         else:
             label = '{} (x)'.format(part_label_dict[i])
-            plt.scatter(-1, -1, marker='+', label=label, visible=False)
-    plt.legend()
+            plt.scatter(None, None, label=label, edgecolors='black', visible=False)
+    plt.legend(loc='center left', bbox_to_anchor=(1, 0.5))
+    plt.tight_layout()
     plt.show()
 
 
 def plot_all(plot_order):
-    pass
+    if plot_order == 'randomly':
+        plot_idx_list = np.random.permutation(range(1, 11789)).tolist()
+    elif plot_order == 'in_order':
+        plot_idx_list = list(range(1, 11789))
+    else:
+        assert 'wrong option'
+
+    for plot_idx in plot_idx_list:
+        img_path = id2path[plot_idx]
+        plot_one(img_path)
 
 
 if args.img_path is not None:

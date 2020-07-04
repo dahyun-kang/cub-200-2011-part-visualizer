@@ -11,7 +11,6 @@ import argparse
 from PIL import Image
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib import colors as mcolors
 
 plt.rcParams["figure.figsize"] = (14, 14)
 plt.rcParams["font.size"] = 16
@@ -87,7 +86,7 @@ def plot_all(plot_order):
     elif plot_order == 'in_order':
         plot_idx_list = list(range(1, 11789))
     else:
-        assert 'wrong option'
+        raise ValueError('Wrong option')
 
     for plot_idx in plot_idx_list:
         img_path = id2path[plot_idx]

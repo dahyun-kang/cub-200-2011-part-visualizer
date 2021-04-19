@@ -1,16 +1,16 @@
 # CUB-200-2011 part visualizer
 
-This repository visualizes CUB-200-2011 part keypoints (Wah et al.).
+Visualization tool for CUB-200-2011 part keypoints (Wah et al.).
 
 <img src = "figs/bunting.png" width="70%"></center>
 <img src = "figs/warbler.png" width="70%"></center>
 <img src = "figs/fulmar.png" width="70%"></center>
 
 ## Requirements
-* Python
-* PyTorch
-* matplotlib
-* PIL
+* [Python](https://www.python.org/) >= 3.x
+* [PyTorch](https://pytorch.org/) >= 1.0
+* [matplotlib](https://matplotlib.org/)
+* [PIL](https://pillow.readthedocs.io/en/stable/)
 
 ## Quick startup
 plot one bird: 
